@@ -28,7 +28,7 @@ route.use((req) => {
 
 The compression type is determined by the `encoding` option passed to the plugin, which can either be `gzip` (the default), `deflate`, or `identity`.
 
-By default, the encoding is applied to the Content-Encoding header. Alternatively, the Transfer-Encoding can be used by passing the `transferOnly` option. However, for HTTP/1.0 requests, Content-Encoding will still be used as a fallback.
+By default, the encoding is applied to the Content-Encoding header. Alternatively, Transfer-Encoding can be used by passing the `transferOnly` option. However, for HTTP/1.0 requests, Content-Encoding will still be used as a fallback.
 
 ```js
 route.use(compress({
