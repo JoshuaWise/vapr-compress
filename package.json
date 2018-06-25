@@ -24,7 +24,7 @@
     "content-encoding",
     "transfer-encoding",
     "accept-encoding",
-    "te",
+    "te"
   ],
   "author": "Joshua Wise <joshuathomaswise@gmail.com>",
   "license": "MIT",
