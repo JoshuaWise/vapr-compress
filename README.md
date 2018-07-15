@@ -11,8 +11,6 @@ npm install --save vapr-compress
 
 This plugin applies standard compression to Vapr responses.
 
-Any options passed to the plugin are forwarded to the [zlib](https://nodejs.org/api/zlib.html#zlib_class_options) core module.
-
 ```js
 const compress = require('vapr-compress');
 const app = require('vapr')();
@@ -31,6 +29,8 @@ This plugin performs [content negotiation](https://tools.ietf.org/html/rfc7231#s
 Special status codes such as `204` and `304`, as well as `HEAD` requests, are handled appropriately (unnecessary processing is avoided). Also, if the response body is `null` or `undefined`, compression will be skipped; empty strings and buffers *are* still considered eligible, however.
 
 ## Options
+
+Any options passed to the plugin are forwarded to the [zlib](https://nodejs.org/api/zlib.html#zlib_class_options) core module. In addition, the behavior of the plugin can be customized with the options below.
 
 ### options.aggressive = *false*
 
