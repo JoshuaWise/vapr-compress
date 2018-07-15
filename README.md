@@ -34,7 +34,7 @@ Any options passed to the plugin are forwarded to the [zlib](https://nodejs.org/
 
 ### options.aggressive = *false*
 
-By default, if the client does not provide any content negotiation headers, compression will not be applied. If this option is set to `true`, however, compression *will* be applied in such cases.
+By default, if the client does not provide any content negotiation headers, compression will not be applied. If this option is set to `true`, however, compression will be applied in such cases.
 
 ```js
 route.use(compress({ aggressive: true }));
