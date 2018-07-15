@@ -52,7 +52,7 @@ route.use(compress({ forced: 'content-encoding' }));
 
 ### options.anyStatus = *false*
 
-The default behavior is to skip responses that have a status code of `300` or higher. If this option is set to `true`, however, responses of any status code will be eligible for compression.
+The default behavior is to skip responses that have a status code of `300` or higher. If `anyStatus` is `true`, however, responses of any status code will be eligible for compression.
 
 ```js
 route.use(compress({ anyStatus: true }));
