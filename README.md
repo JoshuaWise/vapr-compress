@@ -24,7 +24,7 @@ route.use((req) => {
 
 ## Details
 
-This plugin performs [content negotiation](https://tools.ietf.org/html/rfc7231#section-3.4) to decide how and when to compress a response. It will try to use the Transfer-Encoding header if supported by the client (as indicated by the TE header), but will fallback to the Content-Encoding/Accept-Encoding headers when necessary. Both the [gzip](https://nodejs.org/api/zlib.html#zlib_class_zlib_gzip) and [deflate](https://nodejs.org/api/zlib.html#zlib_class_zlib_deflate) encodings are supported, but gzip will be prioritized when the client has not indicated a preference for one.
+This plugin performs [content negotiation](https://tools.ietf.org/html/rfc7231#section-3.4) to decide how/when to compress a response. It will try to use the Transfer-Encoding header if supported by the client (as indicated by the TE header), but will fallback to the Content-Encoding/Accept-Encoding headers when necessary. Both the [gzip](https://nodejs.org/api/zlib.html#zlib_class_zlib_gzip) and [deflate](https://nodejs.org/api/zlib.html#zlib_class_zlib_deflate) encodings are supported, but gzip will be prioritized when the client has not indicated a preference for one.
 
 Special status codes such as `204` and `304`, as well as `HEAD` requests, are handled appropriately (unnecessary processing is avoided). Also, if the response body is `null` or `undefined`, compression will be skipped; empty strings and buffers *are* still considered eligible, however.
 
