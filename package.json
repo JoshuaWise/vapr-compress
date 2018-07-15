@@ -1,6 +1,6 @@
 {
   "name": "vapr-compress",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A compression plugin for Vapr",
   "main": "lib/index.js",
   "dependencies": {
