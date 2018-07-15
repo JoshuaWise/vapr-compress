@@ -60,7 +60,7 @@ route.use(compress({ anyStatus: true }));
 
 ### options.condition = *null*
 
-A `condition` function can be provided to disable compression on a per-request basis. For each eligible request, `condition` will be invoked with `request` and `response` as arguments. If the function returns `false`, compression will be skipped for that request.
+Optionally, a `condition` function can be provided to disable compression on a per-request basis. For each eligible request, `condition` will be invoked with `request` and `response` as arguments. If the function returns `false`, compression will be skipped for that request.
 
 ```js
 route.use(compress({
