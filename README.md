@@ -24,15 +24,47 @@ route.use((req) => {
 });
 ```
 
+## Details
+
+This plugin performs [content negotiation](https://tools.ietf.org/html/rfc7231#section-3.4) to decide how and when to compress a response. It will try to use Transfer-Encoding if supported by the client (by checking the TE header), but will fallback to Content-Encoding when necessary (utilizing the Accept-Encoding header). Both the [gzip](https://nodejs.org/api/zlib.html#zlib_class_zlib_gzip) and [deflate](https://nodejs.org/api/zlib.html#zlib_class_zlib_deflate) encodings are supported, but gzip will be prioritized when the client has not indicated a preference for one.
+
+Special status codes such as `204` and `304`, as well as `HEAD` requests, are handled appropriately (unnecessary processing is avoided). Also, if the response body is `null` or `undefined`, compression will be skipped; empty strings and buffers *are* still considered eligible, however.
+
 ## Options
 
-The compression type is determined by the `encoding` option passed to the plugin, which can either be `gzip` (the default), `deflate`, or `identity`.
+### options.aggressive = *false*
 
-By default, the encoding is applied to the Content-Encoding header. Alternatively, Transfer-Encoding can be used by passing the `transferOnly` option. However, for HTTP/1.0 requests, Content-Encoding will still be used as a fallback.
+By default, if the client does not provide any content negotiation headers, compression will not be applied. If this option is set to `true`, however, compression *will* be applied in such cases.
+
+```js
+route.use(compress({ aggressive: true }));
+```
+
+### options.forced = *null*
+
+This option is used to bypass content negotiation. It can be set to either `"content-encoding"` or `"transfer-encoding"`, indicating which style of compression to use.
+
+```js
+route.use(compress({ forced: 'content-encoding' }));
+```
+
+> Since the `aggressive` option is used to modify the behavior of content negotiation, but the `forced` option turns off content negotiation entirely, the two options are mutually exclusive.
+
+### options.anyStatus = *false*
+
+By default, compression will be skipped if `res.code >= 300`. However, if this option is set to `true`, responses of any status code will be eligible for compression.
+
+```js
+route.use(compress({ anyStatus: true }));
+```
+
+### options.condition = *null*
+
+A `condition` function can be provided to disable compression on a per-request basis. For each eligible request, `condition` will be invoked with `request` and `response` as arguments. If the function returns `false`, compression will be skipped for that request.
 
 ```js
 route.use(compress({
-  encoding: 'deflate',
-  transferOnly: true,
+  anyStatus: true,
+  condition: (req, res) => res.code < 500,
 }));
 ```
