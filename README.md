@@ -9,7 +9,7 @@ npm install --save vapr-compress
 
 ## Usage
 
-This plugin applies compression to Vapr responses.
+This plugin applies standard compression to Vapr responses.
 
 Any options passed to the plugin are forwarded to the [zlib](https://nodejs.org/api/zlib.html#zlib_class_options) core module.
 
