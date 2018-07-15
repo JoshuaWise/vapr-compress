@@ -48,7 +48,7 @@ This option is used to bypass content negotiation. It can be set to either `"con
 route.use(compress({ forced: 'content-encoding' }));
 ```
 
-> Since the `aggressive` option modifies the behavior of content negotiation, but the `forced` option turns off content negotiation entirely, the two options are mutually exclusive.
+> Since the `aggressive` option modifies the behavior of content negotiation but the `forced` option turns off content negotiation entirely, the two options are mutually exclusive.
 
 ### options.anyStatus = *false*
 
