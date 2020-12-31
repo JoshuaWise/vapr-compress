@@ -28,19 +28,29 @@ This plugin utilizes [content negotiation](https://tools.ietf.org/html/rfc7231#s
 
 If the response body is `null` or `undefined`, compression will be skipped. However, empty strings and buffers *are* still considered eligible (for the sake of cache coherence, response size is not taken into consideration by default). Compression is also skipped for `HEAD` requests, but headers are still set as if it were a `GET` request.
 
-Unless the [`forced`](#optionsforced--null) option is used, the Vary header will be automatically updated to make caches aware of the content negotiation.
+Unless the [`forced`](#optionsforced--null) option is used or the [`only`](#optionsonly--null) option is set to `"transfer-encoding"`, the Vary header will be automatically updated to make caches aware of the content negotiation.
 
 ## Options
 
 Any options passed to the plugin are forwarded to the [zlib](https://nodejs.org/api/zlib.html#zlib_class_options) core module. In addition, the behavior of the plugin can be customized with the options below.
 
+### options.only = *null*
+
+This option is used to restrict compression to either `"content-encoding"` or `"transfer-encoding"`, disabling the opposite style.
+
+```js
+route.use(compress({ only: 'transfer-encoding' }));
+```
+
 ### options.aggressive = *false*
 
-By default, if the client doesn't provide any content negotiation headers, compression will be skipped. However, if `aggressive` is `true`, compression will be used in such cases.
+By default, if the client doesn't provide any content negotiation headers, compression will be skipped. However, if `aggressive` is `true`, compression (Content-Encoding) will be used in such cases.
 
 ```js
 route.use(compress({ aggressive: true }));
 ```
+
+> Since the `aggressive` option modifies the behavior of Content-Encoding compression, it cannot be used when the `only` option is set to `"transfer-encoding"`.
 
 ### options.forced = *null*
 
@@ -50,7 +60,7 @@ This option is used to bypass content negotiation. It can be set to either `"con
 route.use(compress({ forced: 'content-encoding' }));
 ```
 
-> Since the `aggressive` option modifies the behavior of content negotiation but the `forced` option turns off content negotiation entirely, the two options are mutually exclusive.
+> Since the `aggressive` and `only` options modify the behavior of content negotiation but the `forced` option turns off content negotiation entirely, the neither of the former options can be used in combination with `forced`.
 
 ### options.anyStatus = *false*
 
